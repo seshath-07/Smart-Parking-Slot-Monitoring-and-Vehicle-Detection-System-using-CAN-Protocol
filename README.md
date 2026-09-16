@@ -33,7 +33,7 @@ This project demonstrates the use of embedded systems, sensors, microcontrollers
 
 ---
 
-🧩 System Architecture
+🧩System Architecture
 
        Vehicle
           │
