@@ -363,32 +363,6 @@ This system can be used in:
 
     Industrial parking facilities
 
-📷 Project Demonstration
-
-Add project images, circuit diagrams, simulation screenshots, or hardware photographs here.
-
-docs/
-├── circuit-diagram.png
-├── hardware-setup.jpg
-├── simulation.png
-└── output-display.jpg
-
-Example Markdown:
-
-![Circuit Diagram](docs/circuit-diagram.png)
-
-![Hardware Setup](docs/hardware-setup.jpg)
-
-![Simulation](docs/simulation.png)
-
-👥 Contributors
-
-Add the project members here:
-
-1. Name - Roll Number
-2. Name - Roll Number
-3. Name - Roll Number
-4. Name - Roll Number
 
 📄 License
 
