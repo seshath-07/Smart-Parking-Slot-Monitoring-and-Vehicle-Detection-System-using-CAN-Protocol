@@ -1,248 +1,402 @@
-🚗 Smart Parking Slot Monitoring and Vehicle System Using CAN Protocol
+Smart Parking Slot Monitoring and Vehicle Detection System Using CAN Protocol
+📌 Project Overview
 
-📌 Overview
+The Smart Parking Slot Monitoring and Vehicle Detection System is an embedded system designed to monitor parking-slot availability and detect vehicles in real time using the Controller Area Network (CAN) protocol.
 
-The Smart Parking Slot Monitoring and Vehicle Detection System is an embedded system project designed to monitor parking slot availability and detect vehicles using the CAN (Controller Area Network) protocol.
+The system uses sensors to identify whether individual parking slots are occupied or vacant. The collected information is transmitted between multiple embedded nodes through the CAN bus, enabling reliable and efficient parking-space monitoring.
 
-The system uses sensors to identify whether individual parking slots are occupied or available. The collected information is transmitted between embedded nodes using CAN communication and can be displayed to the user through an LCD or other monitoring interface.
-
-This project demonstrates the use of embedded systems, sensors, microcontrollers, and CAN bus communication for developing a smart parking solution.
-
----
-
+This project can be used as a foundation for smart parking systems, automated parking management, and vehicle monitoring applications.
 🎯 Objectives
 
-- Detect vehicles entering and occupying parking slots.
-- Monitor the availability of parking spaces in real time.
-- Communicate parking information between multiple embedded nodes using CAN.
-- Display the status of parking slots.
-- Reduce the time required to find an available parking space.
-- Demonstrate practical implementation of the CAN communication protocol.
+    Detect the presence or absence of vehicles in parking slots.
 
----
+    Monitor multiple parking slots in real time.
 
-⚙️ Features
+    Communicate parking-status information using the CAN protocol.
 
-- 🚘 Vehicle detection using sensors
-- 🅿️ Parking slot monitoring
-- 🔄 Real-time slot status updates
-- 📡 CAN protocol-based communication
-- 🖥️ LCD/display-based status indication
-- 🔌 Multi-node communication
-- 💡 Embedded-system based implementation
+    Display the availability of parking spaces to users.
 
----
+    Reduce the time required to find an available parking slot.
 
-🧩System Architecture
+    Demonstrate practical implementation of CAN-based embedded communication.
 
-       Vehicle
-          │
-          ▼
-   ┌──────────────┐
-   │ Vehicle      │
-   │ Detection    │
-   │ Sensor       │
-   └──────┬───────┘
-          │
-          ▼
-   ┌──────────────┐
-   │ Microcontroller│
-   │ / CAN Node    │
-   └──────┬───────┘
-          │
-       CAN BUS
-          │
-     ┌────┴────┐
-     ▼         ▼
-┌─────────┐ ┌─────────┐
-│ CAN Node│ │ CAN Node│
-│  2      │ │  3      │
-└────┬────┘ └────┬────┘
-     │           │
-     └─────┬─────┘
-           ▼
-    ┌──────────────┐
-    │ LCD / Display│
-    └──────────────┘
+✨ Features
 
----
+    🚗 Real-time vehicle detection
+
+    🅿️ Parking-slot occupancy monitoring
+
+    🔄 CAN-based communication between nodes
+
+    📡 Reliable data transmission
+
+    📊 Parking availability display
+
+    ⚡ Fast status updates
+
+    🔧 Modular embedded-system architecture
+
+    🔌 Suitable for multi-node CAN networks
+
+🏗️ System Architecture
+
+                   ┌──────────────────────┐
+                   │   Parking Slot 1     │
+                   │    Sensor Node       │
+                   └──────────┬───────────┘
+                              │
+                              │
+                   ┌──────────▼───────────┐
+                   │   Parking Slot 2     │
+                   │    Sensor Node       │
+                   └──────────┬───────────┘
+                              │
+                              │
+                         CAN BUS
+                              │
+                              ▼
+                   ┌──────────────────────┐
+                   │    CAN Controller    │
+                   │   / Central Node     │
+                   └──────────┬───────────┘
+                              │
+                              ▼
+                   ┌──────────────────────┐
+                   │   Parking Status     │
+                   │       Display        │
+                   └──────────────────────┘
 
 🔧 Hardware Requirements
 
-- Microcontroller with CAN support
-- CAN Transceiver
-- Vehicle detection sensors
-- LCD Display
-- LEDs
-- Connecting wires
-- Power supply
-- CAN bus termination resistors
-- Breadboard / PCB
-
-Example Components
-
-Depending on the implementation, the project can use:
-
-- LPC2129 / ARM7 microcontroller
-- CAN transceiver such as MCP2551/TJA1050
-- IR sensors or other vehicle-detection sensors
-- 16×2 LCD
-- LEDs for slot indication
-
----
-
+The exact hardware may vary depending on the implementation.
+Component	Purpose
+Microcontroller	Controls sensors and CAN communication
+CAN Transceiver	Provides physical CAN-bus communication
+IR / Ultrasonic Sensor	Detects vehicle presence
+LCD / OLED Display	Displays parking availability
+CAN Bus Wiring	Connects CAN nodes
+Power Supply	Provides power to the system
+Connecting Wires	Hardware interconnection
+Breadboard / PCB	Circuit implementation
 💻 Software Requirements
 
-- Keil µVision
-- Embedded C
-- Flash Magic / appropriate programming tool
-- Proteus (optional, for simulation)
+    Embedded C / C++
 
----
+    Microcontroller IDE
 
-📡 CAN Communication
+    CAN communication libraries or drivers
 
-CAN (Controller Area Network) is used to exchange parking information between different embedded nodes.
+    Serial Monitor / Debugging Terminal
 
-Each CAN node can transmit information such as:
+    Optional simulation software
 
-CAN ID     : 0x101
-Data       : Slot 1 = Occupied
+🔌 CAN Protocol Communication
 
-Example parking status:
+The Controller Area Network (CAN) protocol is used to exchange parking-status information between the sensor nodes and the central monitoring node.
 
-Slot 1 → Occupied
-Slot 2 → Available
-Slot 3 → Occupied
-Slot 4 → Available
+Each parking node can transmit a CAN message containing information such as:
 
-The receiving node processes the CAN message and updates the corresponding parking-slot status.
+CAN ID       : 0x101
+DLC          : 1 Byte
+Data[0]      : 0x01
 
----
+Example interpretation:
 
-🔄 Working Principle
+0x00 → Parking Slot Vacant
+0x01 → Parking Slot Occupied
 
-1. The vehicle approaches a parking slot.
-2. The sensor detects the presence of the vehicle.
-3. The microcontroller reads the sensor status.
-4. The parking status is converted into a CAN message.
-5. The CAN message is transmitted through the CAN bus.
-6. Other CAN nodes receive the message.
-7. The received information is processed.
-8. The LCD/display shows the current parking-slot availability.
-9. LEDs can indicate whether a slot is occupied or available.
+For multiple parking slots, different CAN identifiers can be assigned:
+CAN ID	Slot	Status
+0x101	Slot 1	Occupied / Vacant
+0x102	Slot 2	Occupied / Vacant
+0x103	Slot 3	Occupied / Vacant
+0x104	Slot 4	Occupied / Vacant
 
----
+    Note: CAN IDs and data formats can be modified according to the actual implementation.
 
-🧠 Example Slot Status
+⚙️ Working Principle
+1. Vehicle Detection
 
-Parking Slot| Sensor Status| Display
-Slot 1| Vehicle detected| OCCUPIED
-Slot 2| No vehicle| AVAILABLE
-Slot 3| Vehicle detected| OCCUPIED
-Slot 4| No vehicle| AVAILABLE
+A sensor is installed at each parking slot to detect whether a vehicle is present.
+2. Sensor Processing
 
----
+The microcontroller continuously reads the sensor output and determines the parking-slot status.
 
-📂 Project Structure
+Sensor Detection
+       │
+       ▼
+Vehicle Present?
+   ┌───┴───┐
+  YES      NO
+   │        │
+   ▼        ▼
+Occupied   Vacant
 
-Smart-Parking-CAN/
+3. CAN Transmission
+
+The sensor node creates a CAN message containing the parking-slot status and transmits it over the CAN bus.
+4. CAN Reception
+
+The central controller receives messages from the different parking nodes.
+5. Status Processing
+
+The central controller updates the status of each parking slot based on the received CAN messages.
+6. Display
+
+The current parking availability is displayed to the user.
+
+Example:
+
+========================
+     SMART PARKING
+========================
+Slot 1 : OCCUPIED
+Slot 2 : VACANT
+Slot 3 : OCCUPIED
+Slot 4 : VACANT
+------------------------
+Available Slots : 2
+========================
+
+📁 Project Structure
+
+A typical project structure can be organized as follows:
+
+Smart-Parking-Slot-Monitoring-and-Vehicle-Detection-System-using-CAN-Protocol/
 │
 ├── README.md
+│
 ├── src/
 │   ├── main.c
 │   ├── can.c
-│   ├── lcd.c
+│   ├── can.h
 │   ├── sensor.c
-│   └── gpio.c
+│   ├── sensor.h
+│   ├── display.c
+│   └── display.h
 │
 ├── include/
-│   ├── can.h
-│   ├── lcd.h
-│   ├── sensor.h
-│   └── gpio.h
+│   └── config.h
+│
+├── hardware/
+│   ├── circuit-diagram/
+│   └── pcb/
+│
+├── simulation/
+│   └── simulation-files/
 │
 ├── docs/
-│   ├── block_diagram.png
-│   └── circuit_diagram.png
+│   └── project-report.pdf
 │
-└── simulation/
-    └── proteus/
+└── LICENSE
 
----
+🔄 System Flow
 
-📊 Expected Output
+            START
+              │
+              ▼
+       Initialize System
+              │
+              ▼
+       Initialize CAN Bus
+              │
+              ▼
+        Read Slot Sensors
+              │
+              ▼
+      Detect Vehicle Status
+              │
+              ▼
+       Create CAN Message
+              │
+              ▼
+        Transmit CAN Data
+              │
+              ▼
+      Central Node Receives
+              │
+              ▼
+      Update Slot Information
+              │
+              ▼
+       Update Display
+              │
+              ▼
+        Repeat Continuously
 
-Example LCD output:
+📊 Example CAN Data Format
 
-SMART PARKING
-S1:OCC S2:FREE
-S3:OCC S4:FREE
+For a system containing four parking slots, a single CAN frame can also be designed to carry the status of multiple slots.
 
-When a vehicle occupies a slot:
+CAN ID : 0x100
+DLC    : 1
 
-SLOT 1 OCCUPIED
+Data[0]:
 
-When the vehicle leaves:
+Bit 0 → Slot 1
+Bit 1 → Slot 2
+Bit 2 → Slot 3
+Bit 3 → Slot 4
 
-SLOT 1 AVAILABLE
+Example:
 
----
+Data[0] = 0b00001010
 
-🚀 Applications
+This could represent:
 
-- Shopping malls
-- Colleges and universities
-- Airports
-- Hospitals
-- Office buildings
-- Residential parking areas
-- Smart-city parking systems
+Slot 1 → Vacant
+Slot 2 → Occupied
+Slot 3 → Vacant
+Slot 4 → Occupied
 
----
+The exact bit assignment depends on the implementation.
+🚦 Parking Status Logic
+
+IF vehicle_detected == TRUE
+        |
+        └──> Slot = OCCUPIED
+                 |
+                 └──> Send CAN message
+
+ELSE
+        |
+        └──> Slot = VACANT
+                 |
+                 └──> Send CAN message
+
+🧪 Testing
+
+The system can be tested using the following scenarios:
+Test Case	Vehicle Status	Expected Result
+1	No vehicle	Slot shows VACANT
+2	Vehicle detected	Slot shows OCCUPIED
+3	Vehicle enters	CAN status changes to OCCUPIED
+4	Vehicle leaves	CAN status changes to VACANT
+5	Multiple vehicles	Multiple slot statuses update
+6	CAN communication	Correct CAN ID and data received
+✅ Advantages
+
+    Reliable communication using CAN.
+
+    Suitable for distributed parking systems.
+
+    Real-time parking-slot monitoring.
+
+    Reduced wiring complexity compared with separate point-to-point communication.
+
+    Easy to expand by adding additional sensor nodes.
+
+    Provides a practical application of embedded CAN networking.
 
 🔮 Future Enhancements
 
-- Mobile application integration
-- Automatic parking-slot reservation
-- Number-plate recognition
-- Cloud-based parking monitoring
-- Automatic entry and exit gates
-- Real-time parking statistics
-- IoT integration
-- Online parking availability monitoring
+The system can be extended with:
 
----
+    📱 Mobile application integration
 
-👨‍💻 Technologies Used
+    🌐 IoT/cloud-based parking monitoring
 
-- Embedded C
-- ARM Microcontroller
-- CAN Protocol
-- Vehicle Detection Sensors
-- LCD
-- CAN Transceiver
-- Keil µVision
-- Proteus Simulation
+    📷 Camera-based vehicle detection
 
----
+    🔢 Automatic number-plate recognition
 
-📜 Conclusion
+    💳 Automated parking payment
 
-The Smart Parking Slot Monitoring and Vehicle Detection System Using CAN Protocol provides an embedded-system approach for monitoring parking-slot availability. CAN communication enables reliable data exchange between multiple nodes, making the system suitable for scalable parking-management applications.
+    🧭 Guidance to the nearest available slot
 
----
+    📈 Parking-usage analytics
 
-👥 Project Team
+    🔔 Full-parking notifications
 
-Project Name: Smart Parking Slot Monitoring and Vehicle Detection System Using CAN Protocol
+    🗺️ Web-based parking dashboard
 
-Domain: Embedded Systems / Automotive Communication
+🛠️ Troubleshooting
+CAN Communication Not Working
 
-Protocol: CAN (Controller Area Network)
+Check the following:
 
----
+✓ CAN transceiver connections
+✓ CAN_H and CAN_L wiring
+✓ CAN baud rate
+✓ CAN node configuration
+✓ CAN termination resistors
+✓ Power supply
+✓ CAN message identifier
 
-⭐ Keywords
+Incorrect Vehicle Detection
 
-"Smart Parking" "Vehicle Detection" "CAN Protocol" "Embedded Systems" "ARM7" "LPC2129" "CAN Bus" "Embedded C" "Parking Monitoring" "IoT"
+Check:
+
+✓ Sensor alignment
+✓ Sensor distance
+✓ Sensor power supply
+✓ Sensor threshold
+✓ Environmental interference
+
+Display Not Updating
+
+Check:
+
+✓ Display wiring
+✓ I2C/SPI configuration
+✓ Display initialization
+✓ Received CAN data
+✓ Software update logic
+
+📌 Applications
+
+This system can be used in:
+
+    Shopping malls
+
+    Office buildings
+
+    Universities and colleges
+
+    Hospitals
+
+    Airports
+
+    Residential parking areas
+
+    Smart-city parking infrastructure
+
+    Industrial parking facilities
+
+📷 Project Demonstration
+
+Add project images, circuit diagrams, simulation screenshots, or hardware photographs here.
+
+docs/
+├── circuit-diagram.png
+├── hardware-setup.jpg
+├── simulation.png
+└── output-display.jpg
+
+Example Markdown:
+
+![Circuit Diagram](docs/circuit-diagram.png)
+
+![Hardware Setup](docs/hardware-setup.jpg)
+
+![Simulation](docs/simulation.png)
+
+👥 Contributors
+
+Add the project members here:
+
+1. Name - Roll Number
+2. Name - Roll Number
+3. Name - Roll Number
+4. Name - Roll Number
+
+📄 License
+
+This project is intended for educational and academic purposes.
+
+If you are publishing the project as open source, add the appropriate license file, such as MIT, Apache-2.0, or another license suitable for your project.
+⭐ Conclusion
+
+The Smart Parking Slot Monitoring and Vehicle Detection System Using CAN Protocol demonstrates how embedded sensors and CAN-based communication can be combined to create a reliable parking-monitoring solution.
+
+By detecting vehicle occupancy at individual parking slots and communicating the information through the CAN bus, the system provides real-time parking availability information and establishes a scalable foundation for future smart-parking applications.
